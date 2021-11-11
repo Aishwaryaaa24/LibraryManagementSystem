@@ -29,25 +29,54 @@ public class Runner {
             case 1: {
                 // display books.csv
                 File filename = new File("./data/books.csv");
-                // File file = new File("./data/products.csv");
                 Scanner fileScanner;
                 try {
+                    System.out.println();
                     fileScanner = new Scanner(filename);
-                    // process the file, one line at a time
                     while (fileScanner.hasNextLine()) {
                         String[] line = fileScanner.nextLine().split(",");
-                        System.out.println(line[1]);
+                        if (!line[0].equals("SrNo")) {
+                            System.out.println(line[0] + ") " + line[1]);
+                        }
                     }
                     fileScanner.close();
+                    System.out.println();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                // String bookdeets = utility.getdetails(filename);
                 break;
             }
             case 2: {
                 // ask for book id and check if issuedby == null, if yess update books.csv else
                 // display message
+
+                File filename = new File("./data/books.csv");
+                Scanner fileScanner;
+
+                System.out.print("\nEnter Book ID: ");
+                int bookId = sc.nextInt();
+                boolean isIssued = false;
+                try {
+                    System.out.println();
+                    fileScanner = new Scanner(filename);
+                    while (fileScanner.hasNextLine()) {
+                        String[] line = fileScanner.nextLine().split(",");
+                        if (!line[0].equals("SrNo") && line[0].equals(bookId + "") && line[5].equals("1")) {
+                            System.out.println(line[0] + ") " + line[1] + " has already been issued");
+                            isIssued = true;
+                            break;
+                        }
+                    }
+                    if (!isIssued) {
+                        // TODO issue book
+                        System.out.println("You have been issued this book");
+                    }
+                    fileScanner.close();
+                    System.out.println();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
                 break;
             }
             case 3: {
